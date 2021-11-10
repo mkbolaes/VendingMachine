@@ -7,7 +7,7 @@ usd_denominations = np.array([('W', 20), ('T', 10), ('F', 5), ('O', 1),
 class Wallet:
     # A class that represents a mutable store of cash
     # Will be used as the Vending Machine's cash register
-    def __init__(self, denominations):
+    def __init__(self, denominations=usd_denominations):
         # money should be an array that stores identifier, value, and inventory
         self.money = {d['id']:0 for d in denominations}
 
