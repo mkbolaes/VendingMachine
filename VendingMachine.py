@@ -1,6 +1,7 @@
 class VendingMachine:
 
     def __init__(self):
+        self._cash_register = Wallet()
         pass
 
     def get_stocklist(self):
