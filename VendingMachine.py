@@ -11,12 +11,17 @@ class VendingMachine:
         pass
 
     def display_stocklist(self):
-        _products_in_stock = self._stocklist['quantity'] > 0
-        if sum(_products_in_stock) == 0:
+        available_spaces = self.check_stock()
+        if available_spaces == self.stock_max_entries:
             print('Vending machine is out of stock.')
         else:
-            print(self._stocklist[_products_in_stock])
+            print(self._stocklist[self._products_in_stock])
         pass
+
+    def check_stock(self):
+        # Returns the available number of spaces for new products
+        self._products_in_stock = self._stocklist['quantity'] > 0
+        return self.stock_max_entries - sum(self._products_in_stock)
 
     def purchase_item(self, stock_number):
         # get stock item's price
