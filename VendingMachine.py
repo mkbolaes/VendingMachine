@@ -1,7 +1,13 @@
+import pandas as pd
+
 class VendingMachine:
+    item_max_inventory = 20
+    stock_max_entries = 30
 
     def __init__(self):
         self._cash_register = Wallet()
+        _stocklist_frame = np.ndarray((stock_max_entries,), dtype=[('name','U16'),('quantity','i4')])
+        self._stocklist = pd.DataFrame(_stocklist_frame, index=self._generate_keypad_indicies())
         pass
 
     def get_stocklist(self):
