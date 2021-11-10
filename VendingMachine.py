@@ -10,7 +10,12 @@ class VendingMachine:
         self._stocklist = pd.DataFrame(_stocklist_frame, index=self._generate_keypad_indicies())
         pass
 
-    def get_stocklist(self):
+    def display_stocklist(self):
+        _products_in_stock = self._stocklist['quantity'] > 0
+        if sum(_products_in_stock) == 0:
+            print('Vending machine is out of stock.')
+        else:
+            print(self._stocklist[_products_in_stock])
         pass
 
     def purchase_item(self, stock_number):
