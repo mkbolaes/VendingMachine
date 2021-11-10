@@ -1,6 +1,7 @@
 import numpy as np
 
-usd_denominations = np.array([('W', 20), ('T', 10), ('F', 5), ('O', 1), ('Q', .25), ('D', .10), ('N', .05), ('P', .01)],
+usd_denominations = np.array([('W', 20), ('T', 10), ('F', 5), ('O', 1),
+                              ('Q', .25), ('D', .10), ('N', .05), ('P', .01)],
                              dtype=[('id','U1'), ('cash_value', 'f4')])
 
 class Wallet:
@@ -17,8 +18,21 @@ class Wallet:
             self.money[i] += q
         pass
 
-    def remove_cash(self):
-        pass
+    def remove_cash(self, _cash_bundle):
+        # check that there's enough cash to remove
+        if diff_cash(_cash_bundle):
+            for i, q in _cash_bundle:
+                self.money[i] += q
+                return
+        else:
+            print('Not enough cash.')
+            return
+
+    def diff_cash(self, _cash_bundle):
+        # Compares current money to _cash_bundle. Returns True if _cash_bundle
+        # is an existing subset of money.
+        _cash_deficit = [int((self.money[i] - q) >=0) for i,q in _cash_bundle]
+        return len(_cash_deficit) == sum(_cash_deficit)
 
 class CashBundle:
     # A sum of cash broken down into exact components.
