@@ -44,9 +44,3 @@ class VendingMachine:
         # prompt for user input, loop until "enter" is pressed
         # return payment_total
         pass
-
-class Product:
-
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
