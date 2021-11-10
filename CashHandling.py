@@ -12,7 +12,9 @@ class Wallet:
 
         pass
 
-    def add_cash(self):
+    def add_cash(self, _cash_bundle):
+        for i, q in _cash_bundle:
+            self.money[i] += q
         pass
 
     def remove_cash(self):
@@ -22,5 +24,7 @@ class CashBundle:
     # A sum of cash broken down into exact components.
     # will be used for payments, and the Wallet class
     # The distinct different between this and Wallet is that it is not persistent
+    def __init__(self, id_quantity_tuples):
+        self.cash = np.array(id_quantity_tuples, dtype=[('id','U1'), ('quantity', 'i4')])
 
 # Consider moving all payment-related functions to this module
