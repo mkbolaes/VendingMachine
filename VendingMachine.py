@@ -6,7 +6,7 @@ class VendingMachine:
 
     def __init__(self):
         self._cash_register = Wallet()
-        _stocklist_frame = np.ndarray((stock_max_entries,), dtype=[('name','U16'),('quantity','i4')])
+        _stocklist_frame = np.ndarray((30,), dtype=[('name','U16'), ('quantity','i4'), ('price', 'f8')])
         self._stocklist = pd.DataFrame(_stocklist_frame, index=self._generate_keypad_indicies())
         pass
 
