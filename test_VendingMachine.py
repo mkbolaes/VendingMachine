@@ -21,4 +21,17 @@ def generate_payment(amount):
     # enter
     pass
 
-def
+def run_test_assortment():
+    # add_stock, maximize inventory
+    # add_stock
+        # check that Vending Machine refuses stock
+        # indicate success/failure
+    # purchase_item, overpay with denominator
+        # check that Vending Machine refuses payment if it cannot provide the change
+    # add_cash
+    # purchase_item, 3 levels of payment
+    # drain single stock item (A1)
+    # attempt to purchase the drained item
+    # add new stock item
+    # attempt to purchase new item
+    pass
