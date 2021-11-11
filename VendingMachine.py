@@ -1,5 +1,12 @@
 import pandas as pd
 
+usd_denominations = np.array([('W', 2000), ('T', 1000), ('F', 500), ('O', 100), ('Q', 25), ('D', 10), ('N', 5), ('P', 1)],
+                             dtype=[('id','U1'), ('value', 'i4')])
+
+usd_dict = {}
+for ud in usd_denominations:
+    usd_dict[ud['id']] = ud['value']
+
 class VendingMachine:
     item_max_inventory = 20
     stock_max_entries = 30
@@ -23,6 +30,14 @@ class VendingMachine:
         self._products_in_stock = self._stocklist['quantity'] > 0
         return self.stock_max_entries - sum(self._products_in_stock)
 
+    def check_inventory(self, name):
+        if name in self._stocklist['name']:
+            #return number of open spots for inventory
+            pass
+        else:
+            #return None
+            pass
+
     def purchase_item(self, stock_number):
         # get stock item's price
         # run payment buffer
@@ -34,13 +49,21 @@ class VendingMachine:
         # run get_stocklist
         pass
 
-    def add_stock_item(self):
-        #check for existence
-        #if existing, check for inventory space
-            #add stock or reject some
-        #if doesn't exist, check for stock space
-            #add new product
-            #assign new stock number
+    def add_stock_item(self, name, quantity, price):
+        if name not in self._stocklist['name']:
+            if self.check_stock() > 0:
+                # grabs first empty row
+                idx,_,_,_=self._stocklist[~self._products_in_stock][0]
+                self._stocklist[idx] = np.array([name, quantity, price],
+                                                dtype=[('name','U16'), ('quantity','i4'), ('price', 'f8')])
+                # TODO: add_item up until max inventory limit, return extra
+        else:
+            if self.check_inventory():
+                # TODO: add_item up until max inventory limit, return extra
+                pass
+
+    def remove_stock_item(self, name, quantity):
+        #remove quantity
         pass
 
     def _operating_buffer(self):
@@ -50,7 +73,28 @@ class VendingMachine:
         # if empty, print "out of stock"
         pass
 
-    def _payment_buffer(self):
-        # prompt for user input, loop until "enter" is pressed
-        # return payment_total
-        pass
+    def _generate_keypad_indicies(self, alphas='ABC', nums=range(10)):
+        # Generates
+        _stock_indicies = []
+        for a in alphas:
+            _stock_indicies += [a+str(n) for n in nums]
+        return _stock_indicies[:self.stock_max_entries]
+
+    def _payment_buffer(self, amount_due):
+        accepting_payment = True
+        running_total = 0
+        cash_bundle = []
+        while accepting_payment:
+            cash_id = input('Submit payment. Submit * when payment is complete.\n')
+            if cash_id == '*':
+                accepting_payment = False
+                return None
+            elif cash_id not in accepted_denominations['id']:
+                print('Invalid cash submission. Try again.')
+            else:
+                running_total += usd_dict[cash_id]
+            if running_total >= amount_due:
+                accepting_payment = False
+                return cash_bundle, running_total
+            else:
+                print(F"Money accepted: {running_total/100:.2f}")
